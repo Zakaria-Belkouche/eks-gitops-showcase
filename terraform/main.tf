@@ -7,11 +7,11 @@ module "Network" {
 }
 
 module "Iam" {
-  source = "./modules/iam"
-  github_owner = var.github_owner
-  github_ref = var.github_ref
-  github_repo = var.github_repo
-  aws_region = var.aws_region
+  source        = "./modules/iam"
+  github_owner  = var.github_owner
+  github_ref    = var.github_ref
+  github_repo   = var.github_repo
+  aws_region    = var.aws_region
   ecr_repo_name = var.ecr_repo_name
 }
 

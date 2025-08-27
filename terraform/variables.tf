@@ -101,28 +101,28 @@ variable "certmanager_namespace" {
 
 # OIDC for github actions
 
-variable "aws_region"       { 
-  type = string  
-  default = "eu-west-2" 
-  }
-variable "github_owner"     { 
-  type = string  
+variable "aws_region" {
+  type    = string
+  default = "eu-west-2"
+}
+variable "github_owner" {
+  type    = string
   default = "Zakaria-Belkouche"
-   }
-variable "github_repo"      { 
-  type = string  
-  default = "eks-gitops-showcase" 
-  }
-variable "github_ref"       { 
-  type = string  
-  default = "refs/heads/main" 
-  } 
-  
+}
+variable "github_repo" {
+  type    = string
+  default = "eks-gitops-showcase"
+}
+variable "github_ref" {
+  type    = string
+  default = "refs/heads/main"
+}
+
 # e.g. refs/heads/main or refs/tags/*
-variable "ecr_repo_name"    { 
-  type = string  
-  default = "space-dodger" 
-  }
+variable "ecr_repo_name" {
+  type    = string
+  default = "space-dodger"
+}
 
 # make sure eks cluster is up before helm module runs
 
