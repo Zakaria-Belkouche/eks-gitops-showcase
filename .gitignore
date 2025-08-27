@@ -20,3 +20,5 @@ terraform.rc
 
 
 .terraform/
+
+.terraform.lock.hcl
