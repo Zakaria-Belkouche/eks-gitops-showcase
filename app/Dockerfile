@@ -1,14 +1,17 @@
-# ------- builder stage (no toolchain; just a clean copy) -------
+# ---------- builder (optional, keeps layers tidy) ----------
 FROM alpine:3.20 AS builder
-WORKDIR /build
-COPY site/ ./
-# (optional) do any pre-processing here if you want later
+WORKDIR /work
+COPY site ./site
 
-# ------- runtime stage (serve via NGINX) -------
+# ---------- runtime ----------
 FROM nginx:1.27-alpine
-# minimal, secure-ish config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-# bring in the site from the builder image
-COPY --from=builder /build /usr/share/nginx/html
+# copy built/static files
+COPY --from=builder /work/site /usr/share/nginx/html
+# nginx config (simple)
+RUN printf 'server { \
+  listen 80; listen [::]:80; \
+  root /usr/share/nginx/html; index index.html; \
+  location ~* \\.(js|css|png|jpg|jpeg|gif|svg|woff2?)$ { expires 7d; add_header Cache-Control "public"; } \
+  location / { try_files $uri /index.html; } \
+}\n' > /etc/nginx/conf.d/default.conf
 EXPOSE 80
-HEALTHCHECK CMD wget -qO- http://localhost/ >/dev/null 2>&1 || exit 1
