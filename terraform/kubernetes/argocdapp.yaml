@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Zakaria-Belkouche/eks-gitops-showcase.git
     targetRevision: HEAD
-    path: k8s                 # folder containing namespace/deploy/svc/ingress
+    path: ./terraform/kubernetes                 # folder containing namespace/deploy/svc/ingress
     directory:
       recurse: true
   destination:

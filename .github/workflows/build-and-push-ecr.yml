@@ -55,12 +55,3 @@ jobs:
         run: |
           echo "Image (latest): ${{ steps.meta.outputs.IMAGE_URI }}:latest"
           echo "Image (sha):    ${{ steps.meta.outputs.IMAGE_URI }}:${{ steps.meta.outputs.IMAGE_TAG }}"
-
-      - name: Trivy image scan (report-only)
-        uses: aquasecurity/trivy-action@0.27.0
-        with:
-          scan-type: image
-          image-ref: ${{ steps.meta.outputs.IMAGE_URI }}:${{ steps.meta.outputs.IMAGE_TAG }}
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH,MEDIUM'
-          exit-code: '0'
