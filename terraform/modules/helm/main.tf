@@ -33,10 +33,24 @@ resource "helm_release" "ingress_nginx" {
   name       = "ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
   chart      = "ingress-nginx"
-  version    = "4.11.2" # pick a stable current version for your cluster
-
-  namespace        = "ingress-nginx"
+  version    = "4.11.2"
+  namespace  = "ingress-nginx"
   create_namespace = true
+
+  set {
+    name  = "controller.metrics.enabled"
+    value = "true"
+  }
+  set {
+    name  = "controller.metrics.serviceMonitor.enabled"
+    value = "true"
+  }
+  set {
+    name  = "controller.metrics.serviceMonitor.namespace"
+    value = "monitoring"
+  }
+  # If Prometheus selects by labels, you can also add:
+  # set { name = "controller.metrics.serviceMonitor.additionalLabels.release" value = "prometheus" }
 }
 
 # ---------------------------------------------------------

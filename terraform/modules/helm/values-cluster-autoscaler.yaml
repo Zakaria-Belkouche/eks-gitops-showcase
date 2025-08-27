@@ -1,6 +1,5 @@
 autoDiscovery:
   clusterName: eks
-
 awsRegion: eu-west-2
 
 rbac:
@@ -19,6 +18,6 @@ extraArgs:
 
 replicaCount: 1
 
-# Optional: metrics for Prometheus later
 serviceMonitor:
-  enabled: false
+  enabled: true
+  namespace: monitoring

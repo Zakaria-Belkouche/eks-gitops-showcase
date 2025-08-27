@@ -1,10 +1,5 @@
-# cert-manager.yaml (fixed)
-# Remove this block entirely:
-# crds:
-#   enabled: true
-
 ingressShim:
-  defaultIssuerName: letsencrypt-dns01      # the ClusterIssuer/Issuer you created
+  defaultIssuerName: letsencrypt-dns01
   defaultIssuerKind: ClusterIssuer
   defaultIssuerGroup: cert-manager.io
 
@@ -15,4 +10,12 @@ extraArgs:
 serviceAccount:
   name: cert-manager
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::112136120738:role/irsa-certmanager"
+    eks.amazonaws.com/role-arn: arn:aws:iam::112136120738:role/irsa-certmanager
+
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: true
+    namespace: monitoring
+  # (optional) podmonitor:
+  #   enabled: false

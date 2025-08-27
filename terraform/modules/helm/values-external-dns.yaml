@@ -5,6 +5,13 @@ domainFilters:
   - zakariagatus.click
 policy: upsert-only
 txtOwnerId: eks-externaldns
+
 serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::112136120738:role/irsa-externaldns
+
+metrics:
+  enabled: true
+serviceMonitor:
+  enabled: true
+  namespace: monitoring
