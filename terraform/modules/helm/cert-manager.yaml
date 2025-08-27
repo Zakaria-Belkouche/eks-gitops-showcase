@@ -1,0 +1,18 @@
+# cert-manager.yaml (fixed)
+# Remove this block entirely:
+# crds:
+#   enabled: true
+
+ingressShim:
+  defaultIssuerName: letsencrypt-dns01      # the ClusterIssuer/Issuer you created
+  defaultIssuerKind: ClusterIssuer
+  defaultIssuerGroup: cert-manager.io
+
+extraArgs:
+  - --dns01-recursive-nameservers=8.8.8.8:53
+  - --dns01-recursive-nameservers-only
+
+serviceAccount:
+  name: cert-manager
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::112136120738:role/irsa-certmanager"

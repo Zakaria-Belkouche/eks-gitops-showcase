@@ -1,0 +1,84 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: space-dodger
+
+---   
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: space-dodger
+  namespace: space-dodger
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: space-dodger
+  template:
+    metadata:
+      labels:
+        app: space-dodger
+    spec:
+      containers:
+        - name: web
+          
+          image: 112136120738.dkr.ecr.eu-west-2.amazonaws.com/space-dodger:latest
+          imagePullPolicy: Always           
+          ports:
+            - containerPort: 80            
+          readinessProbe:
+            httpGet: { path: "/", port: 80 }
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet: { path: "/", port: 80 }
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests: { cpu: "50m", memory: "64Mi" }
+            limits:   { cpu: "200m", memory: "128Mi" }
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: space-dodger
+  namespace: space-dodger
+spec:
+  selector:
+    app: space-dodger
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: space-dodger
+  namespace: space-dodger
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-dns01
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: app.zakariagatus.click     
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: space-dodger
+                port:
+                  number: 80
+  tls:
+    - secretName: space-dodger-tls
+      hosts:
+        - app.zakariagatus.click

@@ -1,0 +1,20 @@
+server:
+  extraArgs:
+    - --insecure
+
+  service:
+    type: ClusterIP        # ✅ was server.serviceAccount.type
+
+  ingress:
+    enabled: true
+    ingressClassName: "nginx"
+    annotations:
+      nginx.ingress.kubernetes.io/hsts: "false"   # ✅ was nginx.org/hsts
+      cert-manager.io/cluster-issuer: "letsencrypt-dns01"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    hosts:
+      - argocd.zakariagatus.click
+    tls:
+      - secretName: argocd-ingress-tls
+        hosts:
+          - argocd.zakariagatus.click

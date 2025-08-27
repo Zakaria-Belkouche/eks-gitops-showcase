@@ -1,0 +1,24 @@
+autoDiscovery:
+  clusterName: eks
+
+awsRegion: eu-west-2
+
+rbac:
+  serviceAccount:
+    create: true
+    name: cluster-autoscaler
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::112136120738:role/irsa-clusterautoscaler
+
+extraArgs:
+  balance-similar-node-groups: "true"
+  skip-nodes-with-local-storage: "false"
+  skip-nodes-with-system-pods: "false"
+  expander: least-waste
+  stderrthreshold: info
+
+replicaCount: 1
+
+# Optional: metrics for Prometheus later
+serviceMonitor:
+  enabled: false

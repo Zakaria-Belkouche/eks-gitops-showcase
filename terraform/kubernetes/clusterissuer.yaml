@@ -1,0 +1,21 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-dns01
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: zackbelk16@gmail.com
+    privateKeySecretRef:
+      name: letsencrypt-dns01
+    solvers:
+    - selector:
+        dnsZones:
+        - zakariagatus.click
+      dns01:
+        route53:
+          region: eu-west-2
+          # hostedZoneID: Z03197441FOIGRDDOF569
+    - http01:
+        ingress:
+          class: nginx     # ✅ correct key; no role here
