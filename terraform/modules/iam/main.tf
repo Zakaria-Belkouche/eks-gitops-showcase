@@ -62,15 +62,15 @@ resource "aws_iam_role_policy_attachment" "node_AmazonEC2ContainerRegistryReadOn
 
 data "aws_caller_identity" "current" {}
 
-# 1) GitHub OIDC provider (one per AWS account)
+
 resource "aws_iam_openid_connect_provider" "github" {
   url            = "https://token.actions.githubusercontent.com"
   client_id_list = ["sts.amazonaws.com"]
-  # GitHub’s OIDC root CA thumbprint
+  
   thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
 }
 
-# 2) IAM role GitHub Actions can assume (scoped to your repo + ref)
+
 resource "aws_iam_role" "github_ecr_pusher" {
   name = "github-ecr-pusher"
 
@@ -87,7 +87,6 @@ resource "aws_iam_role" "github_ecr_pusher" {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
         }
         StringLike = {
-          # Limit to your repo and a specific ref (branch/tag). Add more entries to allow PRs, tags, etc.
           "token.actions.githubusercontent.com:sub" = "repo:${var.github_owner}/${var.github_repo}:ref:${var.github_ref}"
         }
       }
@@ -95,8 +94,6 @@ resource "aws_iam_role" "github_ecr_pusher" {
   })
 }
 
-# 3) Permissions to push images to ECR
-# Least-priv: split GetAuthorizationToken (*) from repo-scoped actions
 data "aws_partition" "current" {}
 locals {
   ecr_repo_arn = "arn:${data.aws_partition.current.partition}:ecr:${var.aws_region}:${data.aws_caller_identity.current.account_id}:repository/${var.ecr_repo_name}"

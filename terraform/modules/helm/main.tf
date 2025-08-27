@@ -17,10 +17,10 @@ resource "helm_release" "cert_manager" {
     value = "true"
   }
 
-  timeout       = 900  # 🕒 more time for CRDs + webhook
-  wait_for_jobs = true # ✅ wait for startupapicheck job
+  timeout       = 900  
+  wait_for_jobs = true 
 
-  # Load values from file and inject the IRSA ARN dynamically
+  
   values = [
     templatefile("${path.module}/cert-manager.yaml", {
     })
@@ -49,8 +49,6 @@ resource "helm_release" "ingress_nginx" {
     name  = "controller.metrics.serviceMonitor.namespace"
     value = "monitoring"
   }
-  # If Prometheus selects by labels, you can also add:
-  # set { name = "controller.metrics.serviceMonitor.additionalLabels.release" value = "prometheus" }
 }
 
 # ---------------------------------------------------------

@@ -17,5 +17,3 @@ prometheus:
   servicemonitor:
     enabled: true
     namespace: monitoring
-  # (optional) podmonitor:
-  #   enabled: false

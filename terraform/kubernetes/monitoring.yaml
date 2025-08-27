@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
     chart: kube-prometheus-stack
-    targetRevision: 62.7.0            # pin a recent version
+    targetRevision: 62.7.0          
     helm:
       releaseName: prometheus
       values: |
@@ -21,16 +21,15 @@ spec:
             scrapeInterval: 30s
             evaluationInterval: 30s
 
-            # scrape ServiceMonitor/PodMonitor from ANY namespace (important!)
+            
             serviceMonitorSelectorNilUsesHelmValues: false
             podMonitorSelectorNilUsesHelmValues: false
             ruleSelectorNilUsesHelmValues: false
 
-        # keep defaults for alertmanager; you can add receivers later
 
         # --- Grafana ---
         grafana:
-          adminPassword: "admin"    # change or use a secret
+          adminPassword: "admin"    
           defaultDashboardsEnabled: true
           service:
             type: ClusterIP
@@ -46,14 +45,14 @@ spec:
               - secretName: grafana-tls
                 hosts:
                   - grafana.zakariagatus.click
-          # Enables automatic pickup of dashboards from ConfigMaps if you add any later
+         
           sidecar:
             dashboards:
               enabled: true
             datasources:
               enabled: true
 
-        # node-exporter / kube-state-metrics enabled by default
+        
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

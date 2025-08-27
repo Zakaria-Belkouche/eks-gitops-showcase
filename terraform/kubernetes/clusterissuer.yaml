@@ -15,7 +15,6 @@ spec:
       dns01:
         route53:
           region: eu-west-2
-          # hostedZoneID: Z03197441FOIGRDDOF569
     - http01:
         ingress:
-          class: nginx     # ✅ correct key; no role here
+          class: nginx    

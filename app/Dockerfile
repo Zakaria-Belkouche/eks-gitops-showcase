@@ -1,13 +1,15 @@
 # ---------- builder (optional, keeps layers tidy) ----------
+  
 FROM alpine:3.20 AS builder
 WORKDIR /work
 COPY site ./site
 
 # ---------- runtime ----------
+
 FROM nginx:1.27-alpine
-# copy built/static files
+
 COPY --from=builder /work/site /usr/share/nginx/html
-# nginx config (simple)
+
 RUN printf 'server { \
   listen 80; listen [::]:80; \
   root /usr/share/nginx/html; index index.html; \

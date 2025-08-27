@@ -118,7 +118,7 @@ variable "github_ref" {
   default = "refs/heads/master"
 }
 
-# e.g. refs/heads/main or refs/tags/*
+
 variable "ecr_repo_name" {
   type    = string
   default = "space-dodger"

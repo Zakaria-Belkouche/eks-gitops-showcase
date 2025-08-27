@@ -10,7 +10,7 @@ resource "aws_security_group" "nodes" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # pod-pod traffic within sg
+
   ingress {
     description = "Node to node (all protocols)"
     from_port   = 0
@@ -19,13 +19,6 @@ resource "aws_security_group" "nodes" {
     self        = true
   }
 
-  #   ingress {
-  #   description     = "Control plane to node 443"
-  #   from_port       = 443
-  #   to_port         = 443
-  #   protocol        = "tcp"
-  #   security_groups = [var.cluster_security_group_id]
-  # }
 
   ingress {
     description     = "Control plane to kubelet 10250"
@@ -50,7 +43,7 @@ resource "aws_security_group" "nodes" {
 
 resource "aws_security_group_rule" "cluster_443_from_nodes" {
   type                     = "ingress"
-  security_group_id        = var.cluster_security_group_id # the EKS Cluster SG
+  security_group_id        = var.cluster_security_group_id 
   from_port                = 443
   to_port                  = 443
   protocol                 = "tcp"

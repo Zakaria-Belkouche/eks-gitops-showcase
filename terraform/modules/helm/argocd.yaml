@@ -3,13 +3,13 @@ server:
     - --insecure
 
   service:
-    type: ClusterIP        # ✅ was server.serviceAccount.type
+    type: ClusterIP        
 
   ingress:
     enabled: true
     ingressClassName: "nginx"
     annotations:
-      nginx.ingress.kubernetes.io/hsts: "false"   # ✅ was nginx.org/hsts
+      nginx.ingress.kubernetes.io/hsts: "false"   
       cert-manager.io/cluster-issuer: "letsencrypt-dns01"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     hosts:

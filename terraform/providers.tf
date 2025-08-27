@@ -1,6 +1,14 @@
 terraform {
   required_version = ">= 1.9.0, < 2.0.0"
 
+  backend "s3" {
+    bucket         = "zakaria-projects"
+    key            = "ecs/terraformstate.tfstate"
+    region         = "eu-west-2"
+    encrypt        = true
+    dynamodb_table = "ecsstatefile-lock"
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
