@@ -1,12 +1,10 @@
 provider: aws
-
-env: 
-- name: AWS_DEFAULT_REGION
-  value: eu-west-2
-
+sources:
+  - ingress
 domainFilters:
-- zakariagatus.click
-
+  - zakariagatus.click
+policy: upsert-only
+txtOwnerId: eks-externaldns
 serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::112136120738:role/irsa-externaldns
