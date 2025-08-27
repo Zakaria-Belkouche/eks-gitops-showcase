@@ -115,7 +115,7 @@ variable "github_repo" {
 }
 variable "github_ref" {
   type    = string
-  default = "refs/heads/main"
+  default = "refs/heads/master"
 }
 
 # e.g. refs/heads/main or refs/tags/*
