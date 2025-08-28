@@ -1,4 +1,4 @@
-# ---------- builder (optional, keeps layers tidy) ----------
+# ---------- builder  ----------
   
 FROM alpine:3.20 AS builder
 WORKDIR /work
